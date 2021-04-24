@@ -1,0 +1,73 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Natural Google Search</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <style type="text/css">
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: auto;
+      min-width: 1000px;
+      width: 100%;
+    }
+
+    #iframe {
+      border: none;
+      min-width: 1000px;
+      width: 100%;
+      height: 3000px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <script type="text/javascript" src="lib/underscore.min.js"></script>
+
+  <iframe id="iframe" src="page/mit course six classes - Google Search.html" scrolling="no" title=""></iframe>
+
+  <script type="text/javascript">
+    let xCoord = 0;
+    let yCoord = 0;
+
+    const processSpeech = function (transcript) {
+      console.log(transcript);
+
+      const userSaid = function (str, commands) {
+        for (let i = 0; i < commands.length; i++) {
+          if (str.indexOf(commands[i]) > -1)
+            return true;
+        }
+        return false;
+      };
+
+      let processed = false;
+      if (userSaid(transcript.toLowerCase(), ['down'])) {
+        yCoord = yCoord + 50;
+        window.scroll(xCoord, yCoord);
+        processed = true;
+      }
+      else if (userSaid(transcript.toLowerCase(), ['up'])) {
+        yCoord = Math.max(yCoord - 50, 0);
+        window.scroll(xCoord, yCoord);
+        processed = true;
+      }
+
+      return processed;
+    };
+  </script>
+
+  <script type="text/javascript" src="js/setupSpeech.js"></script>
+</body>
+
+</html>
