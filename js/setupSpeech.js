@@ -17,10 +17,4 @@ recognition.onresult = function (event) {
   debouncedProcessSpeech(transcript);
 };
 
-recognition.onend = function (event) {
-  setTimeout(function () {
-    recognition.start();
-  }, 1000);
-};
-
 recognition.start();

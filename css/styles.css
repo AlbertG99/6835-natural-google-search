@@ -1,14 +1,23 @@
 html, body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin: auto;
-    width: 100%;
+  margin: auto;
+  width: 100%;
 }
 
 #iframe {
-    border: none;
-    width: 100%;
-    height: 3000px;
+  z-index: -1;
+  position: absolute;
+}
+
+#circle-container {
+  position: fixed;
+  z-index: 1;
+}
+
+#circle-container svg {
+  height: 3000px;
+  width: 3000px;
 }
