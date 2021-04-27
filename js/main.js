@@ -15,7 +15,10 @@ const click = function () {
   const elements = document.elementsFromPoint(xPosition, yPosition);
   for (const i in elements) {
     if (elements[i] instanceof HTMLAnchorElement) {
-      window.location = elements[i].href;
+      // window.location = elements[i].href;
+      $(function () {
+        $("#iframe").load(elements[i].href);
+      });
       break;
     }
   }
@@ -29,6 +32,14 @@ Leap.loop({
     determineScroll();
   }
 }).use('screenPosition', { scale: 0.6 });
+// webgazer.setGazeListener(function(data, elapsedTime) {
+//   if (data == null) {
+//     return;
+//   }
+//   var xprediction = data.x;
+//   var yprediction = data.y;
+//   console.log(data.x, data.y);
+// }).begin();
 
 // Scroll actions
 let xCoord = window.scrollX;
@@ -72,6 +83,12 @@ const processSpeech = function (transcript) {
   }
   else if (userSaid(transcript.toLowerCase(), ['click'])) {
     click();
+    processed = true;
+  }
+  else if (userSaid(transcript.toLowerCase(), ['back', 'return'])) {
+    $(function () {
+      $("#iframe").load("page/example.html");
+    });
     processed = true;
   }
 
