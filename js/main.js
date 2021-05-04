@@ -1,6 +1,5 @@
 const circle = document.getElementById("circle");
 const circleContainer = document.getElementById("circle-container");
-const beginLink = document.getElementById("begin-link");
 const voiceInput = document.getElementById("voice-input");
 
 // Mouse/leap actions
@@ -10,9 +9,11 @@ document.body.onmousemove = function (mouseEvent) {
 
   determineScroll();
 }
-let currentURL = "https://www.google.com/";
+let currentURL = "intro.html";
+$(function () {
+  $("#iframe").load(currentURL);
+});
 let history = {};
-beginLink.href = currentURL;
 const loadURL = (newURL) => {
   history[newURL] = currentURL;
   $("#iframe").load(newURL);
@@ -84,7 +85,15 @@ const processSpeech = function (transcript) {
   };
 
   let processed = false;
-  if (userSaid(transcript.toLowerCase(), ['down'])) {
+  if (userSaid(transcript.toLowerCase(), ['search for'])) {
+    const query = transcript.toLowerCase().replace('search for', '');
+    $(function () {
+      const newURL = `https://www.google.com/search?q=${query.replaceAll(' ', '+')}`;
+      loadURL(newURL);
+    });
+    processed = true;
+  }
+  else if (userSaid(transcript.toLowerCase(), ['down'])) {
     scroll(0, 100);
     processed = true;
   }
@@ -96,10 +105,9 @@ const processSpeech = function (transcript) {
     click();
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['search for'])) {
-    const query = transcript.toLowerCase().replace('search for', '');
+  else if (userSaid(transcript.toLowerCase(), ['instructions'])) {
     $(function () {
-      const newURL = `https://www.google.com/search?q=${query.replaceAll(' ', '+')}`;
+      const newURL = "intro.html";
       loadURL(newURL);
     });
     processed = true;
