@@ -8,6 +8,20 @@ body {
 }
 
 #iframe {
+  width: 100%;
+  margin: auto;
+}
+
+#intro {
+  max-width: 500px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+#iframe {
   z-index: -1;
   position: absolute;
 }
@@ -17,7 +31,7 @@ body {
   z-index: 1;
 }
 
-#circle-container svg {
+#circle-svg {
   height: 3000px;
   width: 3000px;
 }

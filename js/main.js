@@ -1,5 +1,6 @@
 const circle = document.getElementById("circle");
 const circleContainer = document.getElementById("circle-container");
+const beginLink = document.getElementById("begin-link");
 
 // Mouse/leap actions
 document.body.onmousemove = function (mouseEvent) {
@@ -8,6 +9,8 @@ document.body.onmousemove = function (mouseEvent) {
 
   determineScroll();
 }
+let currentURL = "https://www.google.com/search?q=mit+course+six+classes";
+beginLink.href = currentURL;
 const click = function () {
   const xPosition = circle.getAttribute('cx');
   const yPosition = circle.getAttribute('cy');
@@ -15,9 +18,11 @@ const click = function () {
   const elements = document.elementsFromPoint(xPosition, yPosition);
   for (const i in elements) {
     if (elements[i] instanceof HTMLAnchorElement) {
-      // window.location = elements[i].href;
       $(function () {
-        $("#iframe").load(elements[i].href);
+        const newURL = elements[i].href.replace(elements[i].baseURI, currentURL.substring(0, currentURL.lastIndexOf('/') + 1));
+        currentURL = newURL;
+        $("#iframe").load(newURL);
+        $('link[href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"]').prop('disabled', true);
       });
       break;
     }
@@ -55,8 +60,8 @@ const determineScroll = function () {
   scroll(Math.abs(diffX) > THRESHOLD ? Math.sign(diffX) * SPEED : 0, Math.abs(diffY) > THRESHOLD ? Math.sign(diffY) * SPEED : 0);
 }
 const scroll = function (amountX, amountY) {
-  xCoord = Math.max(Math.min(xCoord + amountX, 3000), 0);
-  yCoord = Math.max(Math.min(yCoord + amountY, 3000), 0);
+  xCoord = Math.max(Math.min(xCoord + amountX, document.documentElement.scrollWidth), 0);
+  yCoord = Math.max(Math.min(yCoord + amountY, document.documentElement.scrollHeight), 0);
   window.scroll(xCoord, yCoord);
 };
 
@@ -87,7 +92,7 @@ const processSpeech = function (transcript) {
   }
   else if (userSaid(transcript.toLowerCase(), ['back', 'return'])) {
     $(function () {
-      $("#iframe").load("page/example.html");
+      $("#iframe").load("https://www.google.com/search?q=mit+course+six+classes");
     });
     processed = true;
   }

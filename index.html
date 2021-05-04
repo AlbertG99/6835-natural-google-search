@@ -9,6 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -24,14 +25,25 @@
   <script type="text/javascript" src="lib/underscore.min.js"></script>
 
   <!-- Load page -->
-  <div id="iframe"></div>
-  <script type="text/javascript">
-    $(function () {
-      $("#iframe").load("page/example.html");
-    });
-  </script>
+  <div id="iframe">
+    <div id="intro">
+      <h2>Welcome to Natural Google Search!</h2>
+      <p>You can use this application to more naturally search for and browse results on Google.</p>
+      <p>To scroll, move your hand over the Leap Motion sensor in front of you. This will move the red dot.</p>
+      <p>You can also use voice commands to perform various actions:</p>
+      <ul>
+        <li>"click": click the element at the red dot</li>
+        <li>"back" or "return": return to the previous page</li>
+        <li>"up" or "down": scroll a bit up or down, respectively</li>
+      </ul>
+      <a id="begin-link">
+        When you are ready to get started, use the Leap Motion sensor and your voice to click here!
+      </a>
+    </div>
+  </div>
+
   <div id="circle-container">
-    <svg>
+    <svg id="circle-svg">
       <circle id="circle" cx="50" cy="50" r="6" stroke="black" stroke-width="1" fill="red" />
     </svg>
   </div>
