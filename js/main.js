@@ -1,6 +1,7 @@
 const circle = document.getElementById("circle");
 const circleContainer = document.getElementById("circle-container");
 const beginLink = document.getElementById("begin-link");
+const voiceInput = document.getElementById("voice-input");
 
 // Mouse/leap actions
 document.body.onmousemove = function (mouseEvent) {
@@ -9,8 +10,15 @@ document.body.onmousemove = function (mouseEvent) {
 
   determineScroll();
 }
-let currentURL = "https://www.google.com/search?q=mit+course+six+classes";
+let currentURL = "https://www.google.com/";
+let history = {};
 beginLink.href = currentURL;
+const loadURL = (newURL) => {
+  history[newURL] = currentURL;
+  $("#iframe").load(newURL);
+  currentURL = newURL;
+  $('link[href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"]').prop('disabled', true);
+}
 const click = function () {
   const xPosition = circle.getAttribute('cx');
   const yPosition = circle.getAttribute('cy');
@@ -20,9 +28,7 @@ const click = function () {
     if (elements[i] instanceof HTMLAnchorElement) {
       $(function () {
         const newURL = elements[i].href.replace(elements[i].baseURI, currentURL.substring(0, currentURL.lastIndexOf('/') + 1));
-        currentURL = newURL;
-        $("#iframe").load(newURL);
-        $('link[href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"]').prop('disabled', true);
+        loadURL(newURL);
       });
       break;
     }
@@ -67,7 +73,7 @@ const scroll = function (amountX, amountY) {
 
 // Speech actions
 const processSpeech = function (transcript) {
-  console.log(transcript);
+  if (transcript.toLowerCase() != '') voiceInput.innerHTML = transcript.toLowerCase();
 
   const userSaid = function (str, commands) {
     for (let i = 0; i < commands.length; i++) {
@@ -79,20 +85,29 @@ const processSpeech = function (transcript) {
 
   let processed = false;
   if (userSaid(transcript.toLowerCase(), ['down'])) {
-    scroll(100);
+    scroll(0, 100);
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['up'])) {
-    scroll(-100);
+  else if (userSaid(transcript.toLowerCase(), ['upwards'])) {
+    scroll(0, -100);
     processed = true;
   }
   else if (userSaid(transcript.toLowerCase(), ['click'])) {
     click();
     processed = true;
   }
+  else if (userSaid(transcript.toLowerCase(), ['search for'])) {
+    const query = transcript.toLowerCase().replace('search for', '');
+    $(function () {
+      const newURL = `https://www.google.com/search?q=${query.replaceAll(' ', '+')}`;
+      loadURL(newURL);
+    });
+    processed = true;
+  }
   else if (userSaid(transcript.toLowerCase(), ['back', 'return'])) {
     $(function () {
-      $("#iframe").load("https://www.google.com/search?q=mit+course+six+classes");
+      $("#iframe").load(history[currentURL]);
+      currentURL = history[currentURL];
     });
     processed = true;
   }

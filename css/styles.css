@@ -10,6 +10,8 @@ body {
 #iframe {
   width: 100%;
   margin: auto;
+  z-index: -1;
+  position: absolute;
 }
 
 #intro {
@@ -21,9 +23,10 @@ h2 {
   text-align: center;
 }
 
-#iframe {
-  z-index: -1;
-  position: absolute;
+#voice-input {
+  background-color: bisque;
+  z-index: 0;
+  position: fixed;
 }
 
 #circle-container {
