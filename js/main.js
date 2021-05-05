@@ -15,6 +15,7 @@ $(function () {
 });
 let history = {};
 const loadURL = (newURL) => {
+  if (currentURL == newURL) return;
   history[newURL] = currentURL;
   $("#iframe").load(newURL);
   currentURL = newURL;
@@ -60,11 +61,11 @@ const determineScroll = function () {
   const xPosition = circle.getAttribute('cx');
   const yPosition = circle.getAttribute('cy');
 
-  const THRESHOLD = 200;
-  const SPEED = 7;
-  const diffX = xPosition - window.innerWidth / 2
-  const diffY = yPosition - window.innerHeight / 2
-  scroll(Math.abs(diffX) > THRESHOLD ? Math.sign(diffX) * SPEED : 0, Math.abs(diffY) > THRESHOLD ? Math.sign(diffY) * SPEED : 0);
+  const THRESHOLD = 150;
+  const SPEED = 0.02;
+  const diffX = xPosition - window.innerWidth / 2;
+  const diffY = yPosition - window.innerHeight / 2;
+  scroll(Math.abs(diffX) > THRESHOLD ? diffX * SPEED : 0, Math.abs(diffY) > THRESHOLD ? diffY * SPEED : 0);
 }
 const scroll = function (amountX, amountY) {
   xCoord = Math.max(Math.min(xCoord + amountX, document.documentElement.scrollWidth), 0);
@@ -74,7 +75,8 @@ const scroll = function (amountX, amountY) {
 
 // Speech actions
 const processSpeech = function (transcript) {
-  if (transcript.toLowerCase() != '') voiceInput.innerHTML = transcript.toLowerCase();
+  transcript = transcript.toLowerCase()
+  if (transcript != '') voiceInput.innerHTML = transcript;
 
   const userSaid = function (str, commands) {
     for (let i = 0; i < commands.length; i++) {
@@ -85,34 +87,34 @@ const processSpeech = function (transcript) {
   };
 
   let processed = false;
-  if (userSaid(transcript.toLowerCase(), ['search for'])) {
-    const query = transcript.toLowerCase().replace('search for', '');
+  if (userSaid(transcript, ['search for'])) {
+    const query = transcript.substring(transcript.indexOf('search for')).replace('search for', '');
     $(function () {
       const newURL = `https://www.google.com/search?q=${query.replaceAll(' ', '+')}`;
       loadURL(newURL);
     });
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['down'])) {
+  else if (userSaid(transcript, ['down'])) {
     scroll(0, 100);
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['upwards'])) {
+  else if (userSaid(transcript, ['upwards'])) {
     scroll(0, -100);
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['click'])) {
+  else if (userSaid(transcript, ['click'])) {
     click();
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['instructions'])) {
+  else if (userSaid(transcript, ['instructions'])) {
     $(function () {
       const newURL = "intro.html";
       loadURL(newURL);
     });
     processed = true;
   }
-  else if (userSaid(transcript.toLowerCase(), ['back', 'return'])) {
+  else if (userSaid(transcript, ['back', 'return'])) {
     $(function () {
       $("#iframe").load(history[currentURL]);
       currentURL = history[currentURL];
