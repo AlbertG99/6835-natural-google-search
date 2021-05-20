@@ -21,6 +21,10 @@
       text-decoration: none;
       display: inline-block;
     }
+
+    body {
+      height: 1500px;
+    }
   </style>
 </head>
 
@@ -28,21 +32,57 @@
   <div id="intro">
     <h2>Welcome to Natural Google Search!</h2>
     <p>You can use this application to more naturally search for and browse results on Google.</p>
-    <p>The red dot acts as your cursor. To move it, move your hand over the Leap Motion sensor in front of you. To
-      scroll, move the red dot towards the corresponding edge of the window.</p>
-    <p>You can also use voice commands to perform various actions:</p>
-    <ul>
-      <li><i>search for QUERY</i>: start a new Google search for <i>QUERY</i></li>
-      <li><i>click</i>: click the element at the red dot</li>
-      <li><i>back</i> or <i>return</i>: return to the previous page</li>
-      <li><i>upwards</i> or <i>down</i>: scroll a bit up or down, respectively</li>
-      <li><i>instructions</i>: see these instructions again at any time</li>
-    </ul>
+    <p>The red dot
+      <svg width="13px" height="13px">
+        <circle cx="6.5" cy="6.5" r="6" stroke="black" stroke-width="1" fill="red" opacity="0.6" />
+      </svg>
+      acts as your cursor. <b>To move it</b>, move your hand over the Leap Motion sensor in front of you. <b>To
+        scroll</b>, move the red dot towards the corresponding edge of the window.
+    </p>
+    <p>You can also use <b>voice commands</b> to perform various actions:</p>
+    <ol>
+      <li>
+        <b>Navigation:</b>
+        <ul>
+          <li><i>search for QUERY</i>: start a new Google search for <i>QUERY</i></li>
+          <li><i>click</i> or <i>open</i> or <i>select</i>: open the link at the red dot</li>
+          <li><i>back</i> or <i>return</i>: return to the previous page</li>
+        </ul>
+      </li>
+      <li>
+        <b>Scrolling:</b>
+        <ul>
+          <li><i>reverse</i>: reverse the vertical scrolling direction</li>
+          <li><i>upwards</i> or <i>down</i>: scroll a bit up or down, respectively</li>
+        </ul>
+      </li>
+      <li>
+        <b>Pausing:</b> if you need a break, or just want more time to read the page
+        <ul>
+          <li><i>pause</i>: temporarily disable all voice commands and scrolling</li>
+          <li><i>unpause</i> or <i>resume</i> (only enabled commands): resume all voice commands and scrolling</li>
+        </ul>
+      </li>
+      <li>
+        <b>Other:</b>
+        <ul>
+          <li><i>instructions</i>: see these instructions again at any time</li>
+        </ul>
+      </li>
+    </ol>
     <p>You will see your recognized voice input in the top left corner of your screen.</p>
+    <p>Before proceeding, you can practice scrolling up and down on this page.</p>
     <a id="begin-link" href="https://www.google.com/">
       When you are ready to get started, use the Leap Motion sensor and your voice to click here!
     </a>
+    <br />
     Or use the <i>search for</i> voice command to start a search!
+    <br /><br />
+    <p>You can also watch this brief tutorial video for more information:</p>
+    <video width="800" height="409" controls>
+      <source src="video/Tutorial.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 </body>
 

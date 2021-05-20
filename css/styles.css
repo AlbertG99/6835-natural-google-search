@@ -15,7 +15,7 @@ body {
 }
 
 #intro {
-  max-width: 500px;
+  max-width: 800px;
   margin: auto;
 }
 
@@ -27,6 +27,7 @@ h2 {
   background-color: bisque;
   z-index: 0;
   position: fixed;
+  font-size: 20px;
 }
 
 #circle-container {
